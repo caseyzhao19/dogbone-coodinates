@@ -24,12 +24,12 @@ def CalculateLineLineIntersection(line1Point1, line1Point2, line2Point1, line2Po
     p13 = p1.minus(p3)
     p43 = p4.minus(p3)
 
-    if p43.dist() ** 2 < delta ** 3:
+    if p43.dist() ** 2 < delta ** 5:
         print('43')
         return None, None
 
     p21 = p2.minus(p1)
-    if p21.dist() ** 2 < delta ** 3:
+    if p21.dist() ** 2 < delta ** 5:
         print('21')
         return None, None
 
@@ -40,7 +40,7 @@ def CalculateLineLineIntersection(line1Point1, line1Point2, line2Point1, line2Po
     d2121 = p21.x * p21.x + p21.y * p21.y + p21.y * p21.y
 
     denom = d2121 * d4343 - d4321 * d4321
-    if abs(denom) < delta ** 3:
+    if abs(denom) < delta ** 5:
         print('denom')
         return None, None
 
@@ -81,7 +81,7 @@ def fourpointsphere(a, b, c, d):
     C = c.minus(d)
     # something something linear algebra
     det = A.x * (B.y * C.z - B.z * C.y) - A.y * (B.x * C.z - B.z * C.x) + A.z * (B.x * C.y - B.y * C.x)
-    if abs(det) < delta:
+    if abs(det) < delta**5:
         return (a,b,c), -1
     j = A.cross(B).scale(C.dot(C))
     k = C.cross(A).scale(B.dot(B))
@@ -99,7 +99,7 @@ def threepointcircle(a,b,c):
     v = c.minus(b)
     w = t.cross(u)
     wsl = w.dist() ** 2
-    if abs(wsl) < delta:
+    if abs(wsl) < delta ** 5:
         return None, -1
     iwsl2 = 0.5 / wsl
     center = a.plus((u.scale(t.dot(t)*u.dot(v)).minus(t.scale(u.dot(u)*t.dot(v)))).scale(iwsl2))  # i am sorry

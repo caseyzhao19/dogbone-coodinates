@@ -3,12 +3,12 @@ from prism import Prism
 from point import Point
 from antiprism import Antiprism
 
-prism = Prism(2)
+prism = Prism(0.5)
 alledges = set(prism.edges)
 alltrianglefaces = [[prism.pointsnamed[0], prism.pointsnamed[1], prism.pointsnamed[2]],
                     [prism.pointsnamed[3], prism.pointsnamed[4], prism.pointsnamed[5]]]
 #for p, q in alledges: print(p, q)
-antiprism = Antiprism(2)
+antiprism = Antiprism(0.5)
 squarefaces = [prism.face1, prism.face2, prism.face3]
 newsquarefaces = []
 for face in squarefaces:
@@ -18,9 +18,10 @@ for face in squarefaces:
     for i in range(8):
         alltrianglefaces.append([antiprism.pointsnamed[i], antiprism.pointsnamed[(i+1) % 8],
                                  antiprism.pointsnamed[(i+2) % 8]])
-for i in range(0):
+for i in range(10):
     squarefaces = []
     for face in newsquarefaces:
+        prism = Prism(0.5)
         prism.moveface(0, 3, 2, face[0], face[1], face[2])
         squarefaces.append([prism.pointsnamed[2], prism.pointsnamed[1], prism.pointsnamed[5]])
         squarefaces.append([prism.pointsnamed[1], prism.pointsnamed[0], prism.pointsnamed[4]])
@@ -30,6 +31,7 @@ for i in range(0):
 
     newsquarefaces = []
     for face in squarefaces:
+        antiprism = Antiprism(0.5)
         antiprism.moveface(2, 0, 4, face[0], face[1], face[2])
         newsquarefaces.append([antiprism.pointsnamed[3], antiprism.pointsnamed[1], antiprism.pointsnamed[5]])
         alledges = alledges.union(antiprism.edges)
@@ -57,22 +59,30 @@ alledges = alledges.union(prism.edges)'''
 
 print(len(alledges))
 print(len(alltrianglefaces))
-
+f = open("povcode.txt", "w")
 for a, b, c in alltrianglefaces:
     d = a.inverse()
     center, radius = fourpointsphere(a,b,c,d)
-    print("intersection {")
-    print("\t sphere { <", center.x, ",", center.y, ",", center.z, ">,", radius)
-    print("\t\t texture{ pigment{ color rgb<1,0.7,0.1> }")
-    print("\t\t\t finish { specular .7 }}} ")
-    print("\t clipped_by {mesh {")
-    O = Point(0, 0, 0)
-    for p,q,r in [(a,b,c), (O, a, b) , (O, a, c), (O, b, c)]:
-        print("\t\t triangle { <", p.x, ",", p.y, ",", p.z, ">, <", q.x, ",", q.y, ",", q.z, ">, <",
-              r.x, ",", r.y, ",", r.z, "> }")
-    print("\t\t inside_vector <0, 0, 1>}}")
-    print("}")
-
+    if radius == -1:
+        f.write("mesh {\n")
+        f.write("\t triangle { <" + str(a.x) + "," + str(a.y) + "," + str(a.z) + ">, <" + str(b.x) + "," +
+                str(b.y) + "," + str(b.z) + ">, <" + str(c.x) + "," + str(c.y) + "," + str(c.z) + ">}\n")
+        f.write("\t\t texture{ pigment{ color rgb<1,0.7,0.1> }\n")
+        f.write("\t\t\t finish { specular 1 }}\n")
+        f.write("}\n")
+    else:
+        f.write("intersection {\n")
+        f.write("\t sphere { <" + str(center.x) + "," + str(center.y) + "," + str(center.z) + ">," + str(radius) + "\n")
+        f.write("\t\t texture{ pigment{ color rgb<1,0.7,0.1> }\n")
+        f.write("\t\t\t finish { specular 1 }}}\n")
+        f.write("\t clipped_by {mesh {\n")
+        O = Point(0, 0, 0)
+        for p,q,r in [(a,b,c), (O, a, b) , (O, a, c), (O, b, c)]:
+            f.write("\t\t triangle { <" + str(p.x) + "," + str(p.y) + "," + str(p.z) + ">, <" + str(q.x) + "," +
+                    str(q.y) + "," + str(q.z) + ">, <" + str(r.x) + "," + str(r.y) + "," + str(r.z) + "> }\n")
+        f.write("\t\t inside_vector <0, 0, 1>}}\n")
+        f.write("}\n")
+f.close()
 '''for edge in alledges:
     c1, c2 = edge
     c3 = c2.inverse()
