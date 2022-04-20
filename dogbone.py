@@ -64,6 +64,7 @@ for a, b, c in alltrianglefaces:
     d = a.inverse()
     center, radius = fourpointsphere(a,b,c,d)
     if radius == -1:
+        print('hi')
         f.write("mesh {\n")
         f.write("\t triangle { <" + str(a.x) + "," + str(a.y) + "," + str(a.z) + ">, <" + str(b.x) + "," +
                 str(b.y) + "," + str(b.z) + ">, <" + str(c.x) + "," + str(c.y) + "," + str(c.z) + ">}\n")
@@ -71,7 +72,7 @@ for a, b, c in alltrianglefaces:
         f.write("\t\t\t finish { specular 1 }}\n")
         f.write("}\n")
     else:
-        f.write("intersection {\n")
+        f.write("object {\n")
         f.write("\t sphere { <" + str(center.x) + "," + str(center.y) + "," + str(center.z) + ">," + str(radius) + "\n")
         f.write("\t\t texture{ pigment{ color rgb<1,0.7,0.1> }\n")
         f.write("\t\t\t finish { specular 1 }}}\n")
