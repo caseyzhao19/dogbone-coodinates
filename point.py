@@ -105,7 +105,7 @@ class Point:
         maxdist = max(dist1, dist2, dist3)
         sumdist = dist1+dist2+dist3
         # basically triangle inequality but make sure its the equality
-        if abs(sumdist - 2 * maxdist) < delta:
+        if abs(sumdist - 2 * maxdist) < delta**5:
             return True
         return False
 

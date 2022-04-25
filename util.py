@@ -63,6 +63,10 @@ def CalculateLineLineIntersection(line1Point1, line1Point2, line2Point1, line2Po
 # the given axis by theta radians.
 def rotation_matrix(axis, theta):
     axis = np.asarray(axis)
+    if np.sqrt(np.dot(axis, axis)) == 0:
+        return np.array([[1, 0, 0],
+                         [0, 1, 0],
+                         [0, 0, 1]])
     axis = axis / np.sqrt(np.dot(axis, axis))
     a = np.cos(theta / 2.0)
     b, c, d = -axis * np.sin(theta / 2.0)

@@ -95,7 +95,6 @@ class Antiprism:
             rp = np.dot(rm, [self.pointsnamed[p].x, self.pointsnamed[p].y,
                              self.pointsnamed[p].z])
             self.pointsnamed[p] = Point(rp[0], rp[1], rp[2])
-
         v1 = self.pointsnamed[b].scale()
         v2 = y.scale()
         axis = v1.cross(v2)
