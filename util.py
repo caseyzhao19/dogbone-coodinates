@@ -11,6 +11,12 @@ def projection_dist(d):
 def projection_dist_inv(d):
     return np.log((1+d)/(1-d))
 
+def pointplanedistance(x, y, z, a, b, c, d, signed=True):
+    if signed:
+        return (a*x + b*y + c*z + d)/np.sqrt(a**2 + b**2 + c**2)
+    else:
+        return np.abs(a*x + b*y + c*z + d)/np.sqrt(a**2 + b**2 + c**2)
+
 # finds line intersection between two points, that is, smallest line segment between two lines, returns
 # endpoints of that smallest line segment
 def CalculateLineLineIntersection(line1Point1, line1Point2, line2Point1, line2Point2):

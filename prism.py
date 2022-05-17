@@ -59,7 +59,7 @@ class Prism:
         self.topface = frozenset([0,1,2])  # positive z
         self.botface = frozenset([3,4,5])  # negative z'''
 
-        self.face1 = [3, 0, 5]
+        self.face1 = [3, 0, 2]
         self.face2 = [5, 2, 4]
         self.face3 = [4, 1, 3]
 

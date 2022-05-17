@@ -4,14 +4,15 @@ from point import Point
 from antiprism import Antiprism
 
 frames = 200
-for len_idx in range(frames):
-    side_length = 0.02 + 1/frames * len_idx
+for len_idx in range(1):#range(frames):
+    side_length = 0.02 + 1/frames * 42 - 0.001 # 0.02 + 1/frames * len_idx
     prism = Prism(side_length)
     alledges = set(prism.edges)
     #for p, q in alledges: print(p, q)
     antiprism = Antiprism(side_length)
     squarefaces = [[prism.face3], [prism.face2], [prism.face1]]
     newsquarefaces = [[], [], []]
+    # initialize square faces center prism
     branches = [[[prism.pointsnamed[0], prism.pointsnamed[1], prism.pointsnamed[4]],
                  [prism.pointsnamed[0], prism.pointsnamed[3], prism.pointsnamed[4]]],
                 [[prism.pointsnamed[1], prism.pointsnamed[2], prism.pointsnamed[4]],
@@ -26,7 +27,7 @@ for len_idx in range(frames):
             for i in range(8):
                 branches[branch].append([antiprism.pointsnamed[i], antiprism.pointsnamed[(i+1) % 8],
                                      antiprism.pointsnamed[(i+2) % 8]])
-    for i in range(10):
+    for i in range(1):
         squarefaces = [[], [], []]
         for branch in [0, 1, 2]:
             for face in newsquarefaces[branch]:
@@ -48,6 +49,33 @@ for len_idx in range(frames):
                 for j in range(8):
                     branches[branch].append([antiprism.pointsnamed[j], antiprism.pointsnamed[(j+1) % 8],
                                              antiprism.pointsnamed[(j+2) % 8]])
+    for i in range(1):
+        squarefaces = [[], [], []]
+        for branch in [0, 1, 2]:
+            for face in newsquarefaces[branch]:
+                prism = Prism(side_length)
+                prism.moveface(2, 0, 5, face[0], face[1], face[2])
+                squarefaces[branch].append(
+                    [prism.pointsnamed[2], prism.pointsnamed[1], prism.pointsnamed[5], prism.pointsnamed[4]])
+                squarefaces[branch].append(
+                    [prism.pointsnamed[1], prism.pointsnamed[0], prism.pointsnamed[4], prism.pointsnamed[3]])
+                alledges = alledges.union(prism.edges)
+                branches[branch].append([prism.pointsnamed[0], prism.pointsnamed[1], prism.pointsnamed[2]])
+                branches[branch].append([prism.pointsnamed[3], prism.pointsnamed[4], prism.pointsnamed[5]])
+
+        newsquarefaces = [[], [], []]
+        for branch in [0, 1, 2]:
+            for face in squarefaces[branch]:
+                antiprism = Antiprism(side_length)
+                antiprism.moveface(2, 0, 4, face[0], face[1], face[2])
+                newsquarefaces[branch].append([antiprism.pointsnamed[3], antiprism.pointsnamed[1], antiprism.pointsnamed[5],
+                                               antiprism.pointsnamed[7]])
+                alledges = alledges.union(antiprism.edges)
+                for j in range(8):
+                    branches[branch].append([antiprism.pointsnamed[j], antiprism.pointsnamed[(j + 1) % 8],
+                                             antiprism.pointsnamed[(j + 2) % 8]])
+
+
     for branch in [0, 1, 2]:
         for face in newsquarefaces[branch]:
             branches[branch].append([face[0], face[1], face[2]])

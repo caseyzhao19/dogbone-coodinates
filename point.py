@@ -4,7 +4,7 @@ import numpy as np
 import os
 
 # cutoff for when doubles need to check for 'equal', otherwise finicky because rounding and stuff
-delta = 0.000001
+delta = 0.0000000001
 
 
 # 3d point class with some functions
