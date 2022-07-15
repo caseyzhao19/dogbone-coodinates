@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 frames = 1
 for len_idx in range(1):  # range(frames):
-    side_length = 0.7#0.02 + len_idx/frames
+    side_length = 0.48#0.02 + len_idx/frames
     prism = Prism(side_length)
     alledges = set(prism.edges)
     # for p, q in alledges: print(p, q)
@@ -49,7 +49,7 @@ for len_idx in range(1):  # range(frames):
                 branches.append([antiprism.pointsnamed[j], antiprism.pointsnamed[(j + 1) % 8],
                                          antiprism.pointsnamed[(j + 2) % 8]])
     disttowalls = []
-    for i in range(3):
+    for i in range(11):
         curritertriangles = []
         squarefaces = []
         for face in newsquarefaces:
@@ -147,20 +147,25 @@ for len_idx in range(1):  # range(frames):
     f.write("\n")
     f.write("background { rgb <0.1,.3,.4> }")
     f.write("\n")
-    f.write("union {")
+    #f.write("union {")
     for branch in [0, 1, 2]:
-        f.write("object {\n")
-        f.write("\t mesh {\n")
         for a, b, c in branches:
-            f.write("\t\t triangle { <" + str(a.x) + "," + str(a.y) + "," + str(a.z) + ">, <" + str(b.x) + "," +
-                    str(b.y) + "," + str(b.z) + ">, <" + str(c.x) + "," + str(c.y) + "," + str(c.z) + "> }\n")
-        f.write("\t\t inside_vector <0, 0, 1>\n")
-        f.write("\t\t texture{ pigment{ color rgb" + color[branch] + "}\n")
-        f.write("\t\t\t finish { specular 1 }}\n")
-        f.write("\t}\n")
-        f.write("rotate <0, 0," + str(120 * branch) + ">}\n")
-    f.write("rotate <0, 0, 0>")
-    f.write("}")
+            d = a.inverse()
+            center, radius = fourpointsphere(a,b,c,d)
+            f.write("object {\n")
+            f.write(
+                "\t sphere { <" + str(center.x) + "," + str(center.y) + "," + str(center.z) + ">," + str(radius) + "\n")
+            f.write("\t\t texture{ pigment{ color rgb" + color[branch] + "}\n")
+            f.write("\t\t\t finish { specular 1 }}}\n")
+            f.write("\t clipped_by {mesh {\n")
+            O = Point(0, 0, 0)
+            for p, q, r in [(a, b, c), (O, a, b), (O, a, c), (O, b, c)]:
+                f.write("\t\t triangle { <" + str(p.x) + "," + str(p.y) + "," + str(p.z) + ">, <" + str(q.x) + "," +
+                        str(q.y) + "," + str(q.z) + ">, <" + str(r.x) + "," + str(r.y) + "," + str(r.z) + "> }\n")
+            f.write("\t\t inside_vector <0, 0, 1>}}\n")
+            f.write("rotate <0, 0," + str(120 * branch) + ">\n")
+            f.write("rotate <250, 0, 0>}\n")
+    #f.write("rotate <0, 0, 0>}\n")
     #f.write("plane { <0, 1, 0>, 4 }")
     f.close()
 

@@ -110,7 +110,6 @@ class Antiprism:
 
         self.update()
 
-
 '''
 #pt1, pt2 = spherecircleintersect(center, radius, self.pointsnamed[b], B, B.inverse())
 #midpt = pt1 if pt1.dist() < pt2.dist() else pt2

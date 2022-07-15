@@ -110,7 +110,7 @@ class Point:
         return False
 
     def __str__(self):
-        return str(self.x) + " " + str(self.y) + " " + str(self.z)
+        return str(self.x) + ", " + str(self.y) + ", " + str(self.z)
 
     def copy(self):
         return Point(self.x, self.y, self.z)

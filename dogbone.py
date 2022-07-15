@@ -20,7 +20,7 @@ for face in squarefaces:
     for i in range(8):
         alltrianglefaces.append([antiprism.pointsnamed[i], antiprism.pointsnamed[(i+1) % 8],
                                  antiprism.pointsnamed[(i+2) % 8]])
-for i in range(4):
+for i in range(10):
     squarefaces = []
     for face in newsquarefaces:
         prism = Prism(side_len)

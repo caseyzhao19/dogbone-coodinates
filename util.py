@@ -85,14 +85,16 @@ def rotation_matrix(axis, theta):
 # very definitely stolen am not this clevery
 # if points are all on same plane, then sphere is undefined, use plane reflection instead
 # return indicates by returning three points on plane and -1 for radius
-def fourpointsphere(a, b, c, d):
+def fourpointsphere(a, b, c, d, acc=True):
     A = a.minus(d)
     B = b.minus(d)
     C = c.minus(d)
     # something something linear algebra
     det = A.x * (B.y * C.z - B.z * C.y) - A.y * (B.x * C.z - B.z * C.x) + A.z * (B.x * C.y - B.y * C.x)
-    if abs(det) < delta**5:
+    if abs(det) < delta**5 and acc:
         return (a,b,c), -1
+    if not acc and (abs(det) < 0.1 or min(abs(a.dist()), abs(b.dist()), abs(c.dist()), abs(d.dist())) < 0.01):
+        return (a, b, c), -1
     j = A.cross(B).scale(C.dot(C))
     k = C.cross(A).scale(B.dot(B))
     l = B.cross(C).scale(A.dot(A))
@@ -109,7 +111,7 @@ def threepointcircle(a,b,c):
     v = c.minus(b)
     w = t.cross(u)
     wsl = w.dist() ** 2
-    if abs(wsl) < delta ** 5:
+    if abs(wsl) < delta ** 5 or min(abs(a.dist()), abs(b.dist()), abs(c.dist())) < 0.01:
         return None, -1
     iwsl2 = 0.5 / wsl
     center = a.plus((u.scale(t.dot(t)*u.dot(v)).minus(t.scale(u.dot(u)*t.dot(v)))).scale(iwsl2))  # i am sorry
@@ -222,10 +224,6 @@ def linecircleintersections(p, q, c=None, r=1):
     return i1, i2
 
 # given sphere with center C and radius R, and a,b,c on a circle, find intersections
-# also terrible because i am lazy
-# i need help
-# with life
-# and stuff
 def spherecircleintersect(C, R, a, b, c):
     c, r = threepointcircle(a, b, c)
     v1 = b.minus(a)
