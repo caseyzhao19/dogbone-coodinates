@@ -23,14 +23,14 @@ f.write("}\n")
 f.write("\n")
 f.write("background { rgb <1,1,1> }")
 f.write("\n")
+cam_angle = 158
 
 # origin
 f.write("object {\n")
-f.write("\t sphere { <0, 0, 0>, 0.01\n")
-f.write("\t\t texture{ pigment{ color rgb <0, 0, 0>}}\n")
+f.write("\t sphere { <0, 0, -0.5>, 0.01\n")
+f.write("\t\t texture{ pigment{ color rgb <0.2, 0.1, 0.1>} rotate <" + str(cam_angle) + ", 0, 0>}\n")
 f.write("\t\t}}\n")
 
-cam_angle = 158
 
 lastface = 0
 lastprism = 0
@@ -55,7 +55,7 @@ for face in squarefaces:
 desttriangle = []
 desttriangle.append([lastface[0], lastface[1], lastface[2]])
 desttriangle.append([lastface[1], lastface[2], lastface[3]])
-for a, b in [(0, 1), (0, 2), (2, 3), (1, 3)]:
+'''for a, b in [(0, 1), (0, 2), (2, 3), (1, 3)]:
     a = lastface[a]
     b = lastface[b]
     c = a.inverse()
@@ -79,7 +79,7 @@ for a, b in [(0, 1), (0, 2), (2, 3), (1, 3)]:
                                      lastprism.pointsnamed[2], lastprism.pointsnamed[3])
     f.write(">} sphere {<" + str(center.x) + ", " + str(center.y) + ", " + str(center.z) + "> "
             + str(radius + 0.0025) + " pigment{ color rgb <0.05, 0.35, 0.5>}}")
-    f.write("rotate <" + str(cam_angle) + ", 0, 0>}}\n")
+    f.write("rotate <" + str(cam_angle) + ", 0, 0>}}\n")'''
 
 antiprism = Antiprism(0.7)
 antiprism.moveface(2, 0, 4, lastface[0], lastface[1], lastface[2], f, cam_angle)
@@ -146,7 +146,7 @@ for a, b in antiprism.edgesnamed:
     center, radius = fourpointsphere(antiprism.pointsnamed[0], antiprism.pointsnamed[1],
                                      antiprism.pointsnamed[2], antiprism.pointsnamed[3])
     f.write(">} sphere {<" + str(center.x) + ", " + str(center.y) + ", " + str(center.z) + "> "
-            + str(radius + 0.0025) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(cam_angle) + ", 0, 0>}\n")
+            + str(radius) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(cam_angle) + ", 0, 0>}\n")
 # unit sphere
 f.write("object {\n")
 f.write("\t sphere { <0, 0, 0,>, 1.00001\n")

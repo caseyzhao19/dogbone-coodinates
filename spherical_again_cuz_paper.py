@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 
 frames = 1
 for len_idx in range(1):  # range(frames):
-    side_length = 0.48#0.02 + len_idx/frames
+    side_length = 0.75#0.02 + len_idx/frames
     prism = Prism(side_length)
     alledges = set(prism.edges)
     # for p, q in alledges: print(p, q)
@@ -145,7 +145,7 @@ for len_idx in range(1):  # range(frames):
     f.write("\t <10,0,-10> color <0.3, 0.3, 0.3>\n")
     f.write("}\n")
     f.write("\n")
-    f.write("background { rgb <0.1,.3,.4> }")
+    f.write("background { rgb <1,1,1> }")
     f.write("\n")
     #f.write("union {")
     for branch in [0, 1, 2]:
@@ -164,7 +164,7 @@ for len_idx in range(1):  # range(frames):
                         str(q.y) + "," + str(q.z) + ">, <" + str(r.x) + "," + str(r.y) + "," + str(r.z) + "> }\n")
             f.write("\t\t inside_vector <0, 0, 1>}}\n")
             f.write("rotate <0, 0," + str(120 * branch) + ">\n")
-            f.write("rotate <250, 0, 0>}\n")
+            f.write("rotate <0, 0, 0>}\n")
     #f.write("rotate <0, 0, 0>}\n")
     #f.write("plane { <0, 1, 0>, 4 }")
     f.close()

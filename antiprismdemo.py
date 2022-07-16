@@ -136,7 +136,7 @@ class Antiprism:
                     center, radius = fourpointsphere(self.pointsnamed[0], self.pointsnamed[1],
                                                      self.pointsnamed[2], self.pointsnamed[3])
                     f.write(">} sphere {<" + str(center.x) + ", " + str(center.y) + ", " + str(center.z) + "> "
-                            + str(radius + 0.0025) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
+                            + str(radius + 0) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
                         cam_angle) + ", 0, 0>}\n")
                 else:
                     f.write("#declare myspline = spline{linear_spline 0, <"
@@ -220,7 +220,7 @@ class Antiprism:
                     center, radius = fourpointsphere(self.pointsnamed[0], self.pointsnamed[1],
                                                      self.pointsnamed[2], self.pointsnamed[3])
                     f.write(">} sphere {<" + str(center.x) + ", " + str(center.y) + ", " + str(center.z) + "> "
-                            + str(radius + 0.0025) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
+                            + str(radius + 0) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
                         cam_angle) + ", 0, 0>}\n")
                 else:
                     f.write("#declare myspline = spline{linear_spline 0, <"
@@ -356,7 +356,7 @@ class Antiprism:
                     center, radius = fourpointsphere(self.pointsnamed[0], self.pointsnamed[1],
                                                      self.pointsnamed[2], self.pointsnamed[3])
                     f.write(">} sphere {<" + str(center.x) + ", " + str(center.y) + ", " + str(center.z) + "> "
-                            + str(radius + 0.0025) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
+                            + str(radius + 0) + " pigment{ color rgb <0.4, 0.05, 0.05>}} rotate <" + str(
                         cam_angle) + ", 0, 0>}\n")
                 else:
                     f.write("#declare myspline = spline{linear_spline 0, <"
