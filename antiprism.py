@@ -90,6 +90,8 @@ class Antiprism:
         na = v1.cross(v2).scale()
         axis = na.cross(nx)
         theta = np.arccos(nx.dot(na))
+        
+        # makes the normal of the two faces we want to align parallel to each other, so faces are now coplanar
         rm = rotation_matrix([axis.x, axis.y, axis.z], theta)
         for p in range(len(self.points)):
             rp = np.dot(rm, [self.pointsnamed[p].x, self.pointsnamed[p].y,
@@ -99,6 +101,8 @@ class Antiprism:
         v2 = y.scale()
         axis = v1.cross(v2)
         theta = np.arccos(v1.dot(v2))
+        
+        # final rotation aligns the two faces on top of each other
         rm = rotation_matrix([axis.x, axis.y, axis.z], theta)
         for p in range(len(self.points)):
             rp = np.dot(rm, [self.pointsnamed[p].x, self.pointsnamed[p].y,
